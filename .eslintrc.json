@@ -22,6 +22,27 @@
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx",".ts",".tsx"] }],
         "react/react-in-jsx-scope": "off",
-        "react/function-component-definition": "off"
+        "react/function-component-definition": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "linebreak-style": "off",
+        "react/jsx-tag-spacing": "off",
+        "quotes": "off",
+        "import/extensions": "off",
+        "import/no-unresolved": "off",
+        "import/order": "off",
+        "arrow-body-style": "off",
+        "arrow-parens":"off",
+        "import/prefer-default-export":"off",
+        "indent":"off",
+        "no-trailing-spaces":"off",
+        "no-underscore-dangle":"off",
+        "object-curly-newline":"off",
+        "jsx-a11y/anchor-is-valid":"off",
+        "import/newline-after-import":"off",
+        "react/jsx-indent":"off",
+        "jsx-a11y/label-has-associated-control":"off",
+        "react/no-unknown-property":"off",
+        "max-len":"off"
+
     }
 }
