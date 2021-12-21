@@ -42,7 +42,9 @@
         "react/jsx-indent":"off",
         "jsx-a11y/label-has-associated-control":"off",
         "react/no-unknown-property":"off",
-        "max-len":"off"
+        "max-len":"off",
+        "jsx-a11y/img-redundant-alt":"off",
+        "react/self-closing-comp":"off"
 
     }
 }
