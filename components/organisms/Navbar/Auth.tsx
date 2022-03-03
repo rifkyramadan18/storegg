@@ -20,7 +20,7 @@ export default function Auth() {
       const IMG = process.env.NEXT_PUBLIC_IMG;
       user.avatar = `${IMG}/${userFromPayload.avatar}`;
       setIsLogin(true);
-      setUser(user);
+      setUser(userFromPayload);
     }
   }, []);
 
@@ -57,21 +57,21 @@ export default function Auth() {
           >
             <li>
               <Link href="/member">
-                <a className="dropdown-item text-lg color-palette-2" href="#">
+                <a className="dropdown-item text-lg color-palette-2">
                   My Profile
                 </a>
               </Link>
             </li>
             <li>
               <Link href="/">
-                <a className="dropdown-item text-lg color-palette-2" href="#">
+                <a className="dropdown-item text-lg color-palette-2">
                   Wallet
                 </a>
               </Link>
             </li>
             <li>
               <Link href="/member/edit-profile">
-                <a className="dropdown-item text-lg color-palette-2" href="#">
+                <a className="dropdown-item text-lg color-palette-2">
                   Account Settings
                 </a>
               </Link>
