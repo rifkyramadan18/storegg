@@ -1,22 +1,31 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { getOverview } from "../../../services/player";
+import {
+  HistoryTransactionTypes,
+  TopupCategoryTypes,
+} from "../../../services/data-types";
+import { getOverview } from "../../../services/member";
 import Category from "./Category";
 import TableRow from "./TableRow";
 
 export default function Overview() {
   const [count, setCount] = useState([]);
   const [data, setData] = useState([]);
-  useEffect(async () => {
+
+  const getMemberOverviewAPI = useCallback(async () => {
     const response = await getOverview();
     if (response.error) {
       toast.error(response.message);
     } else {
-      console.log("data :", response);
       setCount(response.data.count);
       setData(response.data.data);
     }
   }, []);
+
+  useEffect(() => {
+    getMemberOverviewAPI();
+  }, []);
+
   const IMG = process.env.NEXT_PUBLIC_IMG;
   return (
     <main className="main-wrapper">
@@ -28,9 +37,13 @@ export default function Overview() {
           </p>
           <div className="main-content">
             <div className="row">
-              {count.map((item) => {
+              {count.map((item: TopupCategoryTypes) => {
                 return (
-                  <Category nominal={item.value} icon="icon-desktop">
+                  <Category
+                    key={item._id}
+                    nominal={item.value}
+                    icon="icon-desktop"
+                  >
                     {item.name}
                   </Category>
                 );
@@ -55,9 +68,10 @@ export default function Overview() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item) => {
+                {data.map((item: HistoryTransactionTypes) => {
                   return (
                     <TableRow
+                      key={item._id}
                       title={item.historyVoucherTopup.gameName}
                       image={`${IMG}/${item.historyVoucherTopup.thumbnail}`}
                       category={item.historyVoucherTopup.category}

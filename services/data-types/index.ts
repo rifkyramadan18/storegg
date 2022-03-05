@@ -44,23 +44,45 @@ export interface SignupTypes {
 }
 
 export interface UserTypes {
-  id : string;
-  username : string;
-  email : string;
-  name : string;
-  avatar : string;
+  id: string;
+  username: string;
+  email: string;
+  name: string;
+  avatar: string;
 }
 
 export interface JWTPayloadTypes {
-  player : UserTypes;
+  player: UserTypes;
   iat: number;
 }
 
 export interface CheckoutTypes {
-    voucher : string;
-    nominal : string;
-    payment : string;
-    bank : string;
-    name : string;
-    accountuser : string;
+  voucher: string;
+  nominal: string;
+  payment: string;
+  bank: string;
+  name: string;
+  accountuser: string;
+}
+
+export interface HistoryVoucherTopupTypes {
+  thumbnail: string;
+  gameName: string;
+  category: string;
+  coinQuantity: number;
+  coinName: string;
+  price: number;
+}
+
+export interface HistoryTransactionTypes {
+  _id: string;
+  historyVoucherTopup: HistoryVoucherTopupTypes;
+  value: number;
+  status: string;
+}
+
+export interface TopupCategoryTypes {
+  _id: string;
+  value: number;
+  name: string;
 }

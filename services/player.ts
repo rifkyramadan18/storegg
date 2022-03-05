@@ -23,7 +23,7 @@ export async function getDetailVoucher(id: string) {
 }
 
 export async function getGameCategory() {
-  const URL = 'players/category';
+  const URL = "players/category";
 
   const response = await axios.get(`${ROOT_API}/${API_VERSION}/${URL}`);
   const axiosResponse = response.data;
@@ -38,16 +38,6 @@ export async function setCheckout(data: CheckoutTypes) {
     url,
     method: "POST",
     data,
-    token: true,
-  });
-}
-
-export async function getOverview() {
-  const url = `${ROOT_API}/${API_VERSION}/players/dashboard`;
-
-  return callAPI({
-    url,
-    method: "GET",
     token: true,
   });
 }
