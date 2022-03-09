@@ -1,12 +1,10 @@
-import jwtDecode from "jwt-decode";
 import SideBar from "../../../components/organisms/SideBar";
 import TransactionsContent from "../../../components/organisms/TransactionsContent";
-import { JWTPayloadTypes, UserTypes } from "../../../services/data-types";
 
 export default function Transactions() {
   return (
     <section className="transactions overflow-auto">
-      <SideBar activeMenu="transactions"/>
+      <SideBar activeMenu="transactions" />
       <TransactionsContent />
     </section>
   );
@@ -15,12 +13,12 @@ export default function Transactions() {
 interface GetServerSideProps {
   req: {
     cookies: {
-      token: string
-    }
-  }
+      token: string;
+    };
+  };
 }
 
-export async function getServerSideProps({ req }:GetServerSideProps) {
+export async function getServerSideProps({ req }: GetServerSideProps) {
   const { token } = req.cookies;
   if (!token) {
     return {
@@ -30,15 +28,8 @@ export async function getServerSideProps({ req }:GetServerSideProps) {
       },
     };
   }
-  const jwtToken = Buffer.from(token, "base64").toString("ascii");
-  const payload: JWTPayloadTypes = jwtDecode(jwtToken);
-  const userFromPayload: UserTypes = payload.player;
-  const IMG = process.env.NEXT_PUBLIC_IMG;
-  userFromPayload.avatar = `${IMG}/${userFromPayload.avatar}`;
 
   return {
-    props: {
-      user: userFromPayload,
-    },
+    props: {},
   };
 }

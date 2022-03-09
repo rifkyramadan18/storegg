@@ -18,8 +18,6 @@ export default function TransactionsContent() {
     } else {
       setData(response.data.data);
       setTotal(response.data.total);
-      console.log("data :", response.data.data);
-      console.log("total :", response.data.total);
     }
   }, []);
 
@@ -29,7 +27,7 @@ export default function TransactionsContent() {
 
   const IMG = process.env.NEXT_PUBLIC_IMG;
 
-  const onTabClick = (value) => {
+  const onTabClick = (value: string) => {
     setTab(value);
     getTransactionContentAPI(value);
   };
@@ -103,6 +101,7 @@ export default function TransactionsContent() {
                       item={`${item.historyVoucherTopup.coinQuantity} ${item.historyVoucherTopup.coinName}`}
                       price={item.value}
                       status={item.status}
+                      id={item._id}
                     />
                   );
                 })}
