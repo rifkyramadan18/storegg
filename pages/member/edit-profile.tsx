@@ -1,7 +1,47 @@
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Input from "../../components/atoms/Input";
 import SideBar from "../../components/organisms/SideBar";
+import { JWTPayloadTypes, UserTypes } from "../../services/data-types";
+import { updateProfile } from "../../services/member";
 
 export default function EditProfile() {
+  const router = useRouter();
+  const [user, setUser] = useState({
+    id: "",
+    name: "",
+    email: "",
+    avatar: "",
+  });
+  const [imagePreview, setImagePreview] = useState(null);
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      const jwtToken = atob(token);
+      const payload: JWTPayloadTypes = jwtDecode(jwtToken);
+      const userFromPayload: UserTypes = payload.player;
+      setUser(userFromPayload);
+    }
+  }, []);
+  const onSubmit = async () => {
+    console.log("data : ", user);
+    const data = new FormData();
+
+    data.append('image', user.avatar);
+    data.append('name', user.name);
+    
+    const response = await updateProfile(data);
+    if (response.error) {
+      toast.error(response.message);
+    } else {
+      console.log('data : ', response);
+      Cookies.remove('token');
+      router.push('/sign-in');
+    }
+  };
   return (
     <section className="edit-profile overflow-auto">
       <SideBar activeMenu="settings" />
@@ -11,30 +51,25 @@ export default function EditProfile() {
           <div className="bg-card pt-30 ps-30 pe-30 pb-30">
             <form action="">
               <div className="photo d-flex">
-                <div className="position-relative me-20">
-                  <img
-                    src="/img/avatar-1.png"
-                    width="90"
-                    height="90"
-                    className="avatar img-fluid"
-                  />
-                  <div className="avatar-overlay position-absolute top-0 d-flex justify-content-center align-items-center">
-                    <img
-                      src="/icon/photo-upload.svg"
-                      alt="upload"
-                      width={90}
-                      height={90}
-                    />
-                  </div>
-                </div>
                 <div className="image-upload">
                   <label htmlFor="avatar">
-                    <img
-                      src="/icon/photo-upload.svg"
-                      alt="upload"
-                      width={90}
-                      height={90}
-                    />
+                    {imagePreview ? (
+                      <img
+                        src={imagePreview}
+                        alt="upload"
+                        width={90}
+                        height={90}
+                        style={{ borderRadius: "100%" }}
+                      />
+                    ) : (
+                      <img
+                        src={user.avatar}
+                        alt="upload"
+                        width={90}
+                        height={90}
+                        style={{ borderRadius: "100%" }}
+                      />
+                    )}
                   </label>
                   <input
                     id="avatar"
@@ -45,19 +80,42 @@ export default function EditProfile() {
                 </div>
               </div>
               <div className="pt-30">
-                <Input title="Full Name" placeholder="Enter your name" />
+                <Input
+                  title="Full Name"
+                  placeholder="Enter your name"
+                  value={user.name}
+                  onChange={(event) =>
+                    setUser({
+                      ...user,
+                      name: event.target.value,
+                    })
+                  }
+                />
               </div>
               <div className="pt-30">
-                <Input title="Email Address" placeholder="Enter your email address"/>
+                <Input
+                  title="Email Address"
+                  placeholder="Enter your email address"
+                  disabled
+                  value={user.email}
+                  onChange={(event) => {
+                    const img = event.target.files[0];
+                    setImagePreview(URL.createObjectURL(img));
+                    return setUser({
+                      ...user,
+                      avatar: img,
+                    });
+                  }}
+                />
               </div>
-              <div className="pt-30">
-                <Input title="Phone" placeholder="Enter your phone number"/>
-              </div>
+              {/* <div className="pt-30">
+                <Input title="Phone" placeholder="Enter your phone number" />
+              </div> */}
               <div className="button-group d-flex flex-column pt-50">
                 <button
-                  type="submit"
+                  type="button"
                   className="btn btn-save fw-medium text-lg text-white rounded-pill"
-                  role="button"
+                  onClick={onSubmit}
                 >
                   Save My Profile
                 </button>

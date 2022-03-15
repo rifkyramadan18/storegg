@@ -1,10 +1,10 @@
 export interface InputProps {
-    title: string;
-    placeholder: string;
+  title: string;
+  placeholder: string;
 }
 
 export default function Input(props: InputProps) {
-    const {title,placeholder,...nativeProps} = props;
+  const { title, placeholder, ...nativeProps } = props;
   return (
     <>
       <label

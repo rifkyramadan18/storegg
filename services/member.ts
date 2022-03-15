@@ -27,12 +27,26 @@ export async function getOverview() {
     token: true,
   });
 }
-export async function getMemberTransactionDetailContent(id: string, token: string) {
+export async function getMemberTransactionDetailContent(
+  id: string,
+  token: string
+) {
   const url = `${ROOT_API}/${API_VERSION}/players/history/${id}/detail`;
 
   return callAPI({
     url,
     method: "GET",
     serverToken: token,
+  });
+}
+
+export async function updateProfile(data: FormData) {
+  const url = `${ROOT_API}/${API_VERSION}/players/profile`;
+
+  return callAPI({
+    url,
+    method: "PUT",
+    data,
+    token: true,
   });
 }

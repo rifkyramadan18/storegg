@@ -1,5 +1,6 @@
 import { HistoryTransactionTypes } from "../../../services/data-types";
 import Row from "./Row";
+import cx from "classnames";
 
 interface TransactionDetailContentProps {
   data: HistoryTransactionTypes;
@@ -8,6 +9,12 @@ export default function TransactionDetailContent(props: TransactionDetailContent
   const { data } = props;
   const IMG = process.env.NEXT_PUBLIC_IMG;
   const total = data.historyVoucherTopup.price + data.tax;
+  const statusClass = cx({
+    "fw-medium text-center label m-0 rounded-pill": true,
+    pending: data.status === "pending",
+    failed: data.status === "failed",
+    success: data.status === "success",
+  });
   return (
     <main className="main-wrapper">
       <div className="ps-lg-0">
@@ -40,9 +47,7 @@ export default function TransactionDetailContent(props: TransactionDetailContent
                   </div>
                 </div>
                 <div>
-                  <p className="fw-medium text-center label pending m-0 rounded-pill">
-                    {data.status}
-                  </p>
+                <p className={statusClass}>{data.status}</p>
                 </div>
               </div>
               <hr />
@@ -79,7 +84,7 @@ export default function TransactionDetailContent(props: TransactionDetailContent
               <div className="d-md-block d-flex flex-column w-100">
                 <a
                   className="btn btn-whatsapp rounded-pill fw-medium text-white border-0 text-lg"
-                  href="#"
+                  href="https://wa.me/6281238564696?text=Saya%20sudah%20melakukan%20pembayaran"
                   role="button"
                 >
                   WhatsApp ke Admin
